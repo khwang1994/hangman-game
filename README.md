@@ -1,7 +1,7 @@
 # hangman-game
 Hangman game implemented in Java. 
 
-To play, 
-+Download all files
-+COMPILE in console: javac *.java
-+RUN game in console: java Hangman.java
+<p><b>Instructions</b>
++Download all files<br>
++COMPILE in console: <b>javac *.java</b><br>
++RUN game in console: <b>java Hangman.java</b></p>
