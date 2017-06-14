@@ -12,6 +12,7 @@ public class Hangman {
 	static int num_wrong;
 	static int num_rounds;
 	static int num_wins;
+	static int letter_count;
 	static boolean[] guess_cache;
 
 	final static int GUESS_LIMIT = 6;
@@ -28,6 +29,7 @@ public class Hangman {
 		num_rounds = 1;
 		num_wins = 0;
 		num_wrong = 0;
+		letter_count = 0;
 		magicWord();
 		// Initalize state with '_'
 		gameState = new char[magic_len];
@@ -79,12 +81,13 @@ public class Hangman {
 			for(int i = 0; i < magic_len; i++){
 				if(magic[i] == c){
 					gameState[i] = c;
+					letter_count++;
 				}
 			}
 			System.out.println("\n'" + c + "' is in the magic word!!! :D");
 			printState();
-			if(magic.equals(gameState)){
-				System.out.println("WIN");
+
+			if(letter_count == magic_len){
 				return WIN;
 			}
 		}
@@ -95,6 +98,7 @@ public class Hangman {
 	void newRound(){
 		num_rounds++;
 		num_wrong = 0;
+		letter_count = 0;
 		magicWord();
 		// Initalize state with '_'
 		gameState = new char[magic_len];
@@ -140,15 +144,16 @@ public class Hangman {
 		System.out.println("*Round " + num_rounds + " *");
 		game.printState();
 		Scanner in = new Scanner(System.in);
-		int gameStatus = 0;
+		int gameStatus = INVALID_GUESS;
 
 		while(num_wrong < GUESS_LIMIT && gameStatus != WIN){
 			System.out.print("Guess a letter: ");
 
 			String guess = in.next();
+			gameStatus = checkGuess(guess);
 
-			while(checkGuess(guess) == INVALID_GUESS){
-				guess = in.next();
+			while(gameStatus == INVALID_GUESS){
+				gameStatus = checkGuess(in.next());
 			}
 
 		}
